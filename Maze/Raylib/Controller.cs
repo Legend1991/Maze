@@ -1,8 +1,9 @@
 ﻿using Maze.Models;
+using KeyboardKey = Raylib_cs.KeyboardKey;
 
 namespace Maze.Raylib
 {
-    using KeyBinding = Dictionary<int, Action>;
+    using KeyBinding = Dictionary<KeyboardKey, Action>;
     public class Controller : IController
     {
         private readonly KeyBinding keyBinding;
@@ -11,15 +12,15 @@ namespace Maze.Raylib
         {
             keyBinding = new()
             {
-                { 265, () => handler(Direction.Up) },
-                { 264, () => handler(Direction.Down) },
-                { 263, () => handler(Direction.Left) },
-                { 262, () => handler(Direction.Right) }
+                { KeyboardKey.KEY_UP,    () => handler(Direction.Up) },
+                { KeyboardKey.KEY_DOWN,  () => handler(Direction.Down) },
+                { KeyboardKey.KEY_LEFT,  () => handler(Direction.Left) },
+                { KeyboardKey.KEY_RIGHT, () => handler(Direction.Right) }
             };
         }
         public void Interrupt()
         {
-            int input = Raylib_cs.Raylib.GetKeyPressed();
+            var input = (KeyboardKey) Raylib_cs.Raylib.GetKeyPressed();
             if (keyBinding.TryGetValue(input, out var handle))
             {
                 handle();

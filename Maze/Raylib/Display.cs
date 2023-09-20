@@ -9,8 +9,8 @@ namespace Maze.Raylib
     {
         private readonly Renderers renderers = new()
         {
-            { '█', RenderWall },
-            { 'x', RenderFinish }
+            { Map.WALL,   RenderWall },
+            { Map.FINISH, RenderFinish }
         };
         private static readonly int WALL_SIZE = 30;
         private readonly string[] schema;

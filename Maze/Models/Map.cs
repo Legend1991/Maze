@@ -4,9 +4,9 @@ namespace Maze.Models
 {
     public class Map
     {
-        private static readonly char START = '*';
-        private static readonly char FINISH = 'x';
-        private static readonly char WALL = '█';
+        public static readonly char START = '*';
+        public static readonly char FINISH = 'x';
+        public static readonly char WALL = '█';
 
         private readonly string[] schema;
         private readonly Point start;

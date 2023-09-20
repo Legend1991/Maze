@@ -1,25 +1,18 @@
 ﻿using System.Drawing;
 using Maze.Models;
 
+System.Console.OutputEncoding = System.Text.Encoding.UTF8;
+
 namespace Maze.Console
 {
-    public class Display : IDisplay
+    public class Display(string[] schema, Hero hero, Score score) : IDisplay
     {
-        private readonly string[] schema;
-        private readonly Hero hero;
-        private readonly Score score;
+        private readonly string[] schema = schema;
+        private readonly Hero hero = hero;
+        private readonly Score score = score;
 
         private Point previous;
         private bool mapRendered = false;
-
-        public Display(string[] schema, Hero hero, Score score)
-        {
-            this.schema = schema;
-            this.hero = hero;
-            this.score = score;
-
-            System.Console.OutputEncoding = System.Text.Encoding.UTF8;
-        }
 
         public void RenderMaze()
         {

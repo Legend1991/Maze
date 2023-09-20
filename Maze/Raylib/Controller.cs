@@ -4,20 +4,17 @@ using KeyboardKey = Raylib_cs.KeyboardKey;
 namespace Maze.Raylib
 {
     using KeyBinding = Dictionary<KeyboardKey, Action>;
-    public class Controller : IController
-    {
-        private readonly KeyBinding keyBinding;
 
-        public Controller(Action<Direction> handler)
+    public class Controller(Action<Direction> handler) : IController
+    {
+        private readonly KeyBinding keyBinding = new()
         {
-            keyBinding = new()
-            {
-                { KeyboardKey.KEY_UP,    () => handler(Direction.Up) },
-                { KeyboardKey.KEY_DOWN,  () => handler(Direction.Down) },
-                { KeyboardKey.KEY_LEFT,  () => handler(Direction.Left) },
-                { KeyboardKey.KEY_RIGHT, () => handler(Direction.Right) }
-            };
-        }
+            { KeyboardKey.KEY_UP,    () => handler(Direction.Up) },
+            { KeyboardKey.KEY_DOWN,  () => handler(Direction.Down) },
+            { KeyboardKey.KEY_LEFT,  () => handler(Direction.Left) },
+            { KeyboardKey.KEY_RIGHT, () => handler(Direction.Right) }
+        };
+
         public void Interrupt()
         {
             var input = (KeyboardKey) Raylib_cs.Raylib.GetKeyPressed();

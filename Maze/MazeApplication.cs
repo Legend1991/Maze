@@ -13,20 +13,12 @@ namespace Maze
         void RenderMaze();
         void RenderAfterword();
     }
-    public class MazeApplication
+    public class MazeApplication(IController controller, IDisplay display, Hero hero, Score score)
     {
-        private readonly IController controller;
-        private readonly IDisplay display;
-        private readonly Hero hero;
-        private readonly Score score;
-
-        public MazeApplication(IController controller, IDisplay display, Hero hero, Score score)
-        {
-            this.controller = controller;
-            this.display = display;
-            this.hero = hero;
-            this.score = score;
-        }
+        private readonly IController controller = controller;
+        private readonly IDisplay display = display;
+        private readonly Hero hero = hero;
+        private readonly Score score = score;
 
         public void Run()
         {

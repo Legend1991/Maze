@@ -4,6 +4,7 @@ using Color = Raylib_cs.Color;
 namespace Maze.Raylib
 {
     using Renderers = Dictionary<char, Action<int, int>>;
+
     public class Display : IDisplay
     {
         private readonly Renderers renderers = new()

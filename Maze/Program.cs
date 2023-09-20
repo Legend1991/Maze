@@ -34,8 +34,10 @@ namespace Maze
             var hero = new Hero(map);
             var score = new Score(map.Complexity());
 
-            var controller = new Maze.Console.Controller(hero.Move);
-            var display = new Maze.Console.Display(schema, hero, score);
+            // var controller = new Maze.Console.Controller(hero.Move);
+            // var display = new Maze.Console.Display(schema, hero, score);
+            var controller = new Maze.Raylib.Controller(hero.Move);
+            var display = new Maze.Raylib.Display(schema, hero, score);
 
             var game = new MazeApplication(controller, display, hero, score);
 

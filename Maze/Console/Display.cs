@@ -1,8 +1,6 @@
 ﻿using System.Drawing;
 using Maze.Models;
 
-System.Console.OutputEncoding = System.Text.Encoding.UTF8;
-
 namespace Maze.Console
 {
     public class Display(string[] schema, Hero hero, Score score) : IDisplay

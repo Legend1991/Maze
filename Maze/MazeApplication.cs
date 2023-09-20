@@ -13,6 +13,7 @@ namespace Maze
         void RenderMaze();
         void RenderAfterword();
     }
+
     public class MazeApplication(IController controller, IDisplay display, Hero hero, Score score)
     {
         private readonly IController controller = controller;

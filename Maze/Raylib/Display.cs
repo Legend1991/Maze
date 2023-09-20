@@ -3,13 +3,13 @@ using Color = Raylib_cs.Color;
 
 namespace Maze.Raylib
 {
-    using Sprites = Dictionary<char, Action<int, int>>;
+    using Renderers = Dictionary<char, Action<int, int>>;
     public class Display : IDisplay
     {
-        private readonly Sprites sprites = new()
+        private readonly Renderers renderers = new()
         {
-            { '█', (x, y) => Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.DARKGREEN) },
-            { 'x', (x, y) => Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.RED) }
+            { '█', RenderWall },
+            { 'x', RenderFinish }
         };
         private static readonly int WALL_SIZE = 30;
         private readonly string[] schema;
@@ -55,12 +55,22 @@ namespace Maze.Raylib
                 var line = schema[y];
                 for (int x = 0; x < line.Length; ++x)
                 {
-                    if (sprites.TryGetValue(line[x], out var draw))
+                    if (renderers.TryGetValue(line[x], out var draw))
                     {
                         draw(WALL_SIZE * x, WALL_SIZE * y);
                     }
                 }
             }
+        }
+
+        static private void RenderWall(int x, int y)
+        {
+            Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.DARKGREEN);
+        }
+
+        static private void RenderFinish(int x, int y)
+        {
+            Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.RED);
         }
 
         private void RenderHero()

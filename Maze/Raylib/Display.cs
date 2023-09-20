@@ -7,22 +7,26 @@ namespace Maze.Raylib
 
     public class Display : IDisplay
     {
+        private static readonly int WALL_SIZE = 30;
+
+        private readonly string[] schema;
+        private readonly Hero hero;
+        private readonly Score score;
         private readonly Renderers renderers = new()
         {
             { Map.WALL,   RenderWall },
             { Map.FINISH, RenderFinish }
         };
-        private static readonly int WALL_SIZE = 30;
-        private readonly string[] schema;
-        private readonly Hero hero;
-        private readonly Score score;
+
         public Display(string[] schema, Hero hero, Score score) 
         {
             this.schema = schema;
             this.hero = hero;
             this.score = score;
 
-            Raylib_cs.Raylib.InitWindow(schema[0].Length * WALL_SIZE, schema.Length * WALL_SIZE, "Maze");
+            var height = schema.Length * WALL_SIZE;
+            var width = schema[0].Length * WALL_SIZE;
+            Raylib_cs.Raylib.InitWindow(width, height, "Maze");
         }
         public void RenderAfterword()
         {
@@ -77,10 +81,11 @@ namespace Maze.Raylib
         private void RenderHero()
         {
             var pos = hero.Position();
-            var x = pos.X * WALL_SIZE + WALL_SIZE / 2;
-            var y = pos.Y * WALL_SIZE + WALL_SIZE / 2;
+            var radius = WALL_SIZE / 2;
+            var x = pos.X * WALL_SIZE + radius;
+            var y = pos.Y * WALL_SIZE + radius;
 
-            Raylib_cs.Raylib.DrawCircle(x, y, WALL_SIZE / 2, Color.WHITE);
+            Raylib_cs.Raylib.DrawCircle(x, y, radius, Color.WHITE);
         }
 
         ~Display()

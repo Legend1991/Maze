@@ -1,4 +1,5 @@
 ﻿using Maze.Models;
+using RaylibCS = Raylib_cs.Raylib;
 using KeyboardKey = Raylib_cs.KeyboardKey;
 
 namespace Maze.Raylib
@@ -17,7 +18,7 @@ namespace Maze.Raylib
 
         public void Interrupt()
         {
-            var input = (KeyboardKey) Raylib_cs.Raylib.GetKeyPressed();
+            var input = (KeyboardKey) RaylibCS.GetKeyPressed();
             if (keyBinding.TryGetValue(input, out var handle))
             {
                 handle();
@@ -26,7 +27,7 @@ namespace Maze.Raylib
 
         public bool Quit()
         {
-            return Raylib_cs.Raylib.WindowShouldClose();
+            return RaylibCS.WindowShouldClose();
         }
     }
 }

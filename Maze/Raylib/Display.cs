@@ -1,4 +1,5 @@
 ﻿using Maze.Models;
+using RaylibCS = Raylib_cs.Raylib;
 using Color = Raylib_cs.Color;
 
 namespace Maze.Raylib
@@ -8,6 +9,8 @@ namespace Maze.Raylib
     public class Display : IDisplay
     {
         private static readonly int WALL_SIZE = 30;
+        private static readonly Color WALL_COLOR = new(3, 201, 160, 255);
+        private static readonly Color FINISH_COLOR = new(255, 189, 0, 255);
         private static readonly int SCORE_FONT_SIZE = 20;
 
         private readonly string[] schema;
@@ -27,7 +30,7 @@ namespace Maze.Raylib
 
             var height = schema.Length * WALL_SIZE + SCORE_FONT_SIZE;
             var width = schema[0].Length * WALL_SIZE;
-            Raylib_cs.Raylib.InitWindow(width, height, "Maze");
+            RaylibCS.InitWindow(width, height, "Maze");
         }
         public void RenderAfterword()
         {
@@ -35,24 +38,24 @@ namespace Maze.Raylib
             var quitMsg = "Coward! Why are you running away?! Your score is 0!!!";
             var afterwordMsg = hero.Finished() ? finishedMsg : quitMsg;
 
-            Raylib_cs.Raylib.BeginDrawing();
-            Raylib_cs.Raylib.ClearBackground(Color.BLACK);
+            RaylibCS.BeginDrawing();
+            RaylibCS.ClearBackground(Color.BLACK);
 
-            Raylib_cs.Raylib.DrawText(afterwordMsg, 12, 12, 20, Color.SKYBLUE);
+            RaylibCS.DrawText(afterwordMsg, 12, 12, 20, Color.SKYBLUE);
 
-            Raylib_cs.Raylib.EndDrawing();
+            RaylibCS.EndDrawing();
         }
 
         public void RenderMaze()
         {
-            Raylib_cs.Raylib.BeginDrawing();
-            Raylib_cs.Raylib.ClearBackground(Color.BLACK);
+            RaylibCS.BeginDrawing();
+            RaylibCS.ClearBackground(Color.BLACK);
 
             RenderMap();
             RenderHero();
-            Raylib_cs.Raylib.DrawText("Score: " + score.Value(), 0, schema.Length * WALL_SIZE, SCORE_FONT_SIZE, Color.SKYBLUE);
+            RenderScore();
 
-            Raylib_cs.Raylib.EndDrawing();
+            RaylibCS.EndDrawing();
         }
 
         private void RenderMap()
@@ -72,12 +75,12 @@ namespace Maze.Raylib
 
         static private void RenderWall(int x, int y)
         {
-            Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.DARKGREEN);
+            RaylibCS.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, WALL_COLOR);
         }
 
         static private void RenderFinish(int x, int y)
         {
-            Raylib_cs.Raylib.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, Color.RED);
+            RaylibCS.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, FINISH_COLOR);
         }
 
         private void RenderHero()
@@ -87,12 +90,17 @@ namespace Maze.Raylib
             var x = pos.X * WALL_SIZE + radius;
             var y = pos.Y * WALL_SIZE + radius;
 
-            Raylib_cs.Raylib.DrawCircle(x, y, radius, Color.WHITE);
+            RaylibCS.DrawCircle(x, y, radius, Color.WHITE);
+        }
+
+        public void RenderScore()
+        {
+            RaylibCS.DrawText("Score: " + score.Value(), 0, schema.Length * WALL_SIZE, SCORE_FONT_SIZE, Color.SKYBLUE);
         }
 
         ~Display()
         {
-            Raylib_cs.Raylib.CloseWindow();
+            RaylibCS.CloseWindow();
         }
     }
 }

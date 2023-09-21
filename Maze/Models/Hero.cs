@@ -15,27 +15,18 @@ namespace Maze.Models
         uint Value();
     }
 
-    public class Hero
+    public class Hero(Map map, IScore score)
     {
-        private readonly Map map;
-        private readonly IScore score;
-        private readonly Movements movements;
-
-        private Point position;
-
-        public Hero(Map map, IScore score)
+        private readonly Map map = map;
+        private readonly IScore score = score;
+        private Point position = map.Start();
+        private Movements movements => new()
         {
-            this.map = map;
-            this.score = score;
-            position = map.Start();
-            movements = new()
-            {
-                { Direction.Up,    () => position.Y -= 1 },
-                { Direction.Down,  () => position.Y += 1 },
-                { Direction.Left,  () => position.X -= 1 },
-                { Direction.Right, () => position.X += 1 },
-            };
-        }
+            { Direction.Up,    () => position.Y -= 1 },
+            { Direction.Down,  () => position.Y += 1 },
+            { Direction.Left,  () => position.X -= 1 },
+            { Direction.Right, () => position.X += 1 },
+        };
 
         public Point Position()
         {

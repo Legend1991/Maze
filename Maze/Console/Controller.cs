@@ -4,23 +4,17 @@ namespace Maze.Console
 {
     using KeyBinding = Dictionary<ConsoleKey, Action>;
 
-    public class Controller : IController
+    public class Controller(Action<Direction> handler) : IController
     {
-        private readonly KeyBinding keyBinding;
-
         private bool quit = false;
-
-        public Controller(Action<Direction> handler)
+        private KeyBinding keyBinding => new()
         {
-            keyBinding = new()
-            {
-                { ConsoleKey.UpArrow,    () => handler(Direction.Up) },
-                { ConsoleKey.DownArrow,  () => handler(Direction.Down) },
-                { ConsoleKey.LeftArrow,  () => handler(Direction.Left) },
-                { ConsoleKey.RightArrow, () => handler(Direction.Right) },
-                { ConsoleKey.Escape,     () => { quit = true; } }
-            };
-        }
+            { ConsoleKey.UpArrow,    () => handler(Direction.Up) },
+            { ConsoleKey.DownArrow,  () => handler(Direction.Down) },
+            { ConsoleKey.LeftArrow,  () => handler(Direction.Left) },
+            { ConsoleKey.RightArrow, () => handler(Direction.Right) },
+            { ConsoleKey.Escape,     () => { quit = true; } }
+        };
 
         public void Interrupt()
         {

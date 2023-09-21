@@ -8,23 +8,24 @@ namespace Maze.Raylib
     public class Display : IDisplay
     {
         private static readonly int WALL_SIZE = 30;
+        private static readonly int SCORE_FONT_SIZE = 20;
 
         private readonly string[] schema;
         private readonly Hero hero;
-        private readonly Score score;
+        private readonly IScore score;
         private readonly Renderers renderers = new()
         {
             { Map.WALL,   RenderWall },
             { Map.FINISH, RenderFinish }
         };
 
-        public Display(string[] schema, Hero hero, Score score) 
+        public Display(string[] schema, Hero hero, IScore score) 
         {
             this.schema = schema;
             this.hero = hero;
             this.score = score;
 
-            var height = schema.Length * WALL_SIZE;
+            var height = schema.Length * WALL_SIZE + SCORE_FONT_SIZE;
             var width = schema[0].Length * WALL_SIZE;
             Raylib_cs.Raylib.InitWindow(width, height, "Maze");
         }
@@ -49,6 +50,7 @@ namespace Maze.Raylib
 
             RenderMap();
             RenderHero();
+            Raylib_cs.Raylib.DrawText("Score: " + score.Value(), 0, schema.Length * WALL_SIZE, SCORE_FONT_SIZE, Color.SKYBLUE);
 
             Raylib_cs.Raylib.EndDrawing();
         }

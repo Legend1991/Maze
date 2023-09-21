@@ -1,11 +1,11 @@
 ﻿namespace Maze.Models
 {
-    public class Score
+    public class DampedScore : IScore
     {
         private uint count = 0;
         private readonly uint magnitude = 1;
 
-        public Score(uint complexity)
+        public DampedScore(uint complexity)
         {
             while (complexity > 0)
             {
@@ -22,7 +22,7 @@
         // The more count value is the less output value is [from magnitude to 0]
         public uint Value()
         {
-            return (uint)Math.Ceiling((decimal)1 / (count + 1) * magnitude);
+            return (uint) Math.Ceiling((decimal) 1 / (count + 1) * magnitude * 100);
         }
     }
 }

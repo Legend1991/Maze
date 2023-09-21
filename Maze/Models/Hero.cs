@@ -9,16 +9,24 @@ namespace Maze.Models
         Up, Down, Left, Right
     }
 
+    public interface IScore
+    {
+        void Enroll();
+        uint Value();
+    }
+
     public class Hero
     {
         private readonly Map map;
+        private readonly IScore score;
         private readonly Movements movements;
 
         private Point position;
 
-        public Hero(Map map)
+        public Hero(Map map, IScore score)
         {
             this.map = map;
+            this.score = score;
             position = map.Start();
             movements = new()
             {
@@ -50,6 +58,10 @@ namespace Maze.Models
                 if (map.Obstacle(position))
                 {
                     position = previous;
+                }
+                else
+                {
+                    score.Enroll();
                 }
             }
         }

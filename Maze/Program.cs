@@ -31,15 +31,15 @@ namespace Maze
             };
 
             var map = new Map(schema);
-            var hero = new Hero(map);
-            var score = new Score(map.Complexity());
+            var score = new DampedScore(map.Complexity());
+            var hero = new Hero(map, score);
 
             // var controller = new Maze.Console.Controller(hero.Move);
             // var display = new Maze.Console.Display(schema, hero, score);
             var controller = new Maze.Raylib.Controller(hero.Move);
             var display = new Maze.Raylib.Display(schema, hero, score);
 
-            var game = new MazeApplication(controller, display, hero, score);
+            var game = new MazeApplication(controller, display, hero);
 
             game.Run();
         }

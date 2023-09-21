@@ -14,12 +14,11 @@ namespace Maze
         void RenderAfterword();
     }
 
-    public class MazeApplication(IController controller, IDisplay display, Hero hero, Score score)
+    public class MazeApplication(IController controller, IDisplay display, Hero hero)
     {
         private readonly IController controller = controller;
         private readonly IDisplay display = display;
         private readonly Hero hero = hero;
-        private readonly Score score = score;
 
         public void Run()
         {
@@ -27,7 +26,6 @@ namespace Maze
             {
                 display.RenderMaze();
                 controller.Interrupt();
-                score.Enroll();
             }
 
             display.RenderAfterword();

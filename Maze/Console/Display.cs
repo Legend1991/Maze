@@ -3,11 +3,11 @@ using Maze.Models;
 
 namespace Maze.Console
 {
-    public class Display(string[] schema, Hero hero, Score score) : IDisplay
+    public class Display(string[] schema, Hero hero, IScore score) : IDisplay
     {
         private readonly string[] schema = schema;
         private readonly Hero hero = hero;
-        private readonly Score score = score;
+        private readonly IScore score = score;
 
         private Point previous;
         private bool mapRendered = false;

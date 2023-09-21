@@ -80,7 +80,9 @@ namespace Maze.Raylib
 
         static private void RenderFinish(int x, int y)
         {
-            RaylibCS.DrawRectangle(x, y, WALL_SIZE, WALL_SIZE, FINISH_COLOR);
+            var size = WALL_SIZE / 2;
+            var shift = size / 2;
+            RaylibCS.DrawRectangle(x + shift, y + shift, size, size, FINISH_COLOR);
         }
 
         private void RenderHero()

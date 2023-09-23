@@ -1,5 +1,6 @@
 ﻿using Maze.Models;
 using RaylibCS = Raylib_cs.Raylib;
+using ConfigFlags = Raylib_cs.ConfigFlags;
 using Color = Raylib_cs.Color;
 
 namespace Maze.Raylib
@@ -28,10 +29,13 @@ namespace Maze.Raylib
             this.hero = hero;
             this.score = score;
 
+            RaylibCS.SetConfigFlags(ConfigFlags.FLAG_MSAA_4X_HINT);
+
             var height = schema.Length * WALL_SIZE + SCORE_FONT_SIZE;
             var width = schema[0].Length * WALL_SIZE;
             RaylibCS.InitWindow(width, height, "Maze");
         }
+
         public void RenderAfterword()
         {
             var finishedMsg = "Well done! You completed the level! Your score is " + score.Value();
@@ -54,6 +58,8 @@ namespace Maze.Raylib
             RenderMap();
             RenderHero();
             RenderScore();
+
+            RaylibCS.DrawFPS(200, schema.Length * WALL_SIZE);
 
             RaylibCS.EndDrawing();
         }

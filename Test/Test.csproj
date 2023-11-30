@@ -22,4 +22,12 @@
     <ProjectReference Include="..\Maze\Maze.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Projects\Maze\Test\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="D:\Projects\Maze\Test\.editorconfig" />
+  </ItemGroup>
+
 </Project>

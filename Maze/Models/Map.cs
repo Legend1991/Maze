@@ -27,7 +27,7 @@ public class Map
         }
     }
 
-    public uint Complexity()
+    public uint Area()
     {
         return (uint)(schema.Length * schema[0].Length);
     }

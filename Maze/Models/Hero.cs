@@ -1,59 +1,53 @@
 ﻿using System.Drawing;
 
-namespace Maze.Models
+namespace Maze.Models;
+
+using Movements = Dictionary<Direction, Func<Point>>;
+
+public enum Direction
 {
-    using Movements = Dictionary<Direction, Action>;
+    Up, Down, Left, Right
+}
 
-    public enum Direction
+public interface IScore
+{
+    void Enroll();
+    uint Value();
+}
+
+public class Hero(Map map, IScore score)
+{
+    private readonly Map map      = map;
+    private readonly IScore score = score;
+    private Point position        = map.Start();
+    private Movements movements   => new()
     {
-        Up, Down, Left, Right
+        { Direction.Up,    () => new Point(position.X,     position.Y - 1) },
+        { Direction.Down,  () => new Point(position.X,     position.Y + 1) },
+        { Direction.Left,  () => new Point(position.X - 1, position.Y)     },
+        { Direction.Right, () => new Point(position.X + 1, position.Y)     },
+    };
+
+    public Point Position()
+    {
+        return new Point(position.X, position.Y);
     }
 
-    public interface IScore
+    public bool Finished()
     {
-        void Enroll();
-        uint Value();
+        return position == map.Finish();
     }
 
-    public class Hero(Map map, IScore score)
+    public void Move(Direction direction)
     {
-        private readonly Map map = map;
-        private readonly IScore score = score;
-        private Point position = map.Start();
-        private Movements movements => new()
+        if (movements.TryGetValue(direction, out var move))
         {
-            { Direction.Up,    () => position.Y -= 1 },
-            { Direction.Down,  () => position.Y += 1 },
-            { Direction.Left,  () => position.X -= 1 },
-            { Direction.Right, () => position.X += 1 },
-        };
+            var nextPosition = move();
 
-        public Point Position()
-        {
-            return new Point(position.X, position.Y);
-        }
-
-        public bool Finished()
-        {
-            return position == map.Finish();
-        }
-
-        public void Move(Direction direction)
-        {
-            if (movements.TryGetValue(direction, out var move))
+            if (map.Obstacle(nextPosition) == false)
             {
-                var previous = Position();
-
-                move();
-
-                if (map.Obstacle(position))
-                {
-                    position = previous;
-                }
-                else
-                {
-                    score.Enroll();
-                }
+                position = nextPosition;
+                score.Enroll();
             }
         }
     }

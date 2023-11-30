@@ -31,7 +31,7 @@ internal class Program
         };
 
         var map = new Map(schema);
-        var score = new DampedScore(map.Complexity());
+        var score = new DampedScore(map.Area());
         var hero = new Hero(map, score);
 
         // var controller = new Maze.Console.Controller(hero.Move);

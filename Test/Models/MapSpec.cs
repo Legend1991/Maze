@@ -5,11 +5,11 @@ namespace Models.Map_spec;
 
 public static class Fixtures
 {
-    public static readonly Map Map        = new(new[] { "* ", "x█" });
+    public static readonly Map Map        = new(new[] { "*█", " x" });
     public static readonly Point Start    = new(0, 0);
-    public static readonly Point Passage  = new(1, 0);
-    public static readonly Point Finish   = new(0, 1);
-    public static readonly Point Obstacle = new(1, 1);
+    public static readonly Point Passage  = new(0, 1);
+    public static readonly Point Obstacle = new(1, 0);
+    public static readonly Point Finish   = new(1, 1);
     public static readonly uint Area      = 4;
 }
 
